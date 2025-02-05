@@ -1,3 +1,4 @@
+import { signIn } from "@/app/utils/auth";
 import { Button } from "../ui/button";
 import {
   Card,
@@ -65,7 +66,15 @@ export function LoginForm() {
         <CardContent>
           <div className="flex flex-col gap-4">
             {/* GITHUB */}
-            <form>
+            <form
+              action={async () => {
+                "use server";
+
+                await signIn("github", {
+                  redirectTo: "/",
+                });
+              }}
+            >
               <Button className="w-full" variant="outline">
                 <Github className="size-4" />
                 Login with GitHub
