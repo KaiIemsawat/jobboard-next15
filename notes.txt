@@ -2,6 +2,14 @@
 
 # Credentials for logging in with Google can be found in Google cloud console
 - Create new project
-- APIs / Service
+- APIs / Service (from dropdown menu)
 - OAuth consent screen -> external (anyone with google account) -> Create
 - Input information..
+- follow to the end and submit
+
+- APIs / Service (from dropdown menu)
+- Credentials
+- '+ CREATE CREDENTIALS'
+- OAtuth client ID
+- http://localhost:3000/api/auth/callback/google
+- create
