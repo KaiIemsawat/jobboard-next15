@@ -1,5 +1,3 @@
-import { signIn } from "@/app/utils/auth";
-import { Button } from "../ui/button";
 import {
   Card,
   CardContent,
@@ -10,7 +8,10 @@ import {
 
 import * as React from "react";
 import type { SVGProps } from "react";
-import { GeneralSubmitButtons } from "../general/SubmitButtons";
+
+import { auth, signIn } from "@/app/utils/auth";
+import { GeneralSubmitButtons } from "@/components/general/SubmitButtons";
+import { redirect } from "next/navigation";
 
 const Github = (props: SVGProps<SVGSVGElement>) => (
   <svg
@@ -54,7 +55,13 @@ const Google = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-export function LoginForm() {
+export async function LoginForm() {
+  const session = await auth();
+
+  if (session?.user) {
+    return redirect("/");
+  }
+
   return (
     <div className="flex flex-col gap-6">
       <Card>

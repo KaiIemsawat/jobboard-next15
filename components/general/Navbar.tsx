@@ -4,8 +4,11 @@ import Image from "next/image";
 import Logo from "@/public/logo.png";
 import { Button } from "../ui/button";
 import { ThemeToggle } from "./ThemeToggle";
+import { auth } from "@/app/utils/auth";
 
-export function Navbar() {
+export async function Navbar() {
+  const session = await auth();
+
   return (
     <nav className="flex items-center justify-between py-5">
       <Link href="/" className="flex items-center gap-2">
@@ -16,7 +19,7 @@ export function Navbar() {
       </Link>
       <div className="flex items-center gap-4">
         <ThemeToggle />
-        <Button>Login</Button>
+        {session?.user ? <Button>Logout</Button> : <Button>Login</Button>}
       </div>
     </nav>
   );
