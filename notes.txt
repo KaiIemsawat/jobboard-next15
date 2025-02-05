@@ -1,1 +1,7 @@
 # AUTH_GITHUB_ID comes form github -> settings -> developer settings -> Oath Apps -> ...
+
+# Credentials for logging in with Google can be found in Google cloud console
+- Create new project
+- APIs / Service
+- OAuth consent screen -> external (anyone with google account) -> Create
+- Input information..

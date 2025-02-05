@@ -1,3 +1,5 @@
+import * as React from "react";
+
 import {
   Card,
   CardContent,
@@ -5,8 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-
-import * as React from "react";
 
 import { auth, signIn } from "@/app/utils/auth";
 import { GeneralSubmitButtons } from "@/components/general/SubmitButtons";
@@ -50,7 +50,15 @@ export async function LoginForm() {
               />
             </form>
             {/* GOOGLE */}
-            <form>
+            <form
+              action={async () => {
+                "use server";
+
+                await signIn("google", {
+                  redirectTo: "/",
+                });
+              }}
+            >
               <GeneralSubmitButtons
                 width="w-full"
                 variant="outline"
