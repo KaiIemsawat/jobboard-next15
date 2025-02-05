@@ -10,6 +10,7 @@ import {
 
 import * as React from "react";
 import type { SVGProps } from "react";
+import { GeneralSubmitButtons } from "../general/SubmitButtons";
 
 const Github = (props: SVGProps<SVGSVGElement>) => (
   <svg
@@ -75,17 +76,21 @@ export function LoginForm() {
                 });
               }}
             >
-              <Button className="w-full" variant="outline">
-                <Github className="size-4" />
-                Login with GitHub
-              </Button>
+              <GeneralSubmitButtons
+                width="w-full"
+                variant="outline"
+                text="Login With GitHub"
+                icon={<Github />}
+              />
             </form>
             {/* GOOGLE */}
             <form>
-              <Button className="w-full" variant="outline">
-                <Google className="size-4" />
-                Login with Google
-              </Button>
+              <GeneralSubmitButtons
+                width="w-full"
+                variant="outline"
+                text="Login With Google"
+                icon={<Google />}
+              />
             </form>
           </div>
         </CardContent>
