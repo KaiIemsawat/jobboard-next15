@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useState } from "react";
 import { UserTypeForm } from "./UserTypeForm";
 import { CompanyForm } from "./CompanyForm";
+import { JobSeekerForm } from "./JobSeekerForm";
 
 type UserSelectionType = "company" | "jobSeeker" | null;
 
@@ -24,11 +25,7 @@ export function OnboardingForm() {
       case 1:
         return <UserTypeForm onSelect={handleUserTypeSelection} />;
       case 2:
-        return userType === "company" ? (
-          <CompanyForm />
-        ) : (
-          <p>User is a job seeker</p>
-        );
+        return userType === "company" ? <CompanyForm /> : <JobSeekerForm />;
       default:
         return null;
     }
@@ -43,7 +40,7 @@ export function OnboardingForm() {
         </h1>
       </div>
 
-      <Card className="max-w-lg w-full ">
+      <Card className="max-w-lg w-full">
         <CardContent className="p-6">{renderStep()}</CardContent>
       </Card>
     </>

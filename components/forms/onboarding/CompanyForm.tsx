@@ -69,7 +69,11 @@ export function CompanyForm() {
               <FormItem>
                 <FormLabel>Company Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter company name" {...field} />
+                  <Input
+                    className="bg-secondary/30"
+                    placeholder="Enter company name"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -87,12 +91,12 @@ export function CompanyForm() {
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className="bg-secondary/30">
                       <SelectValue placeholder="Select Location" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectGroup>
+                    <SelectGroup className="bg-secondary/30">
                       <SelectLabel>Worldwide</SelectLabel>
                       <SelectItem value="worldwide">
                         <span>🌎</span>
@@ -100,7 +104,7 @@ export function CompanyForm() {
                       </SelectItem>
                     </SelectGroup>
 
-                    <SelectGroup>
+                    <SelectGroup className="bg-secondary/30">
                       <SelectLabel>Location</SelectLabel>
                       {countryList.map((country) => (
                         <SelectItem key={country.code} value={country.name}>
@@ -124,7 +128,11 @@ export function CompanyForm() {
               <FormItem>
                 <FormLabel>Website</FormLabel>
                 <FormControl>
-                  <Input placeholder="www.your-company.com" {...field} />
+                  <Input
+                    className="bg-secondary/30"
+                    placeholder="www.your-company.com"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -138,7 +146,11 @@ export function CompanyForm() {
               <FormItem>
                 <FormLabel>X (Twitter) Account</FormLabel>
                 <FormControl>
-                  <Input placeholder="@Yourcompany" {...field} />
+                  <Input
+                    className="bg-secondary/30"
+                    placeholder="@Yourcompany"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -152,7 +164,11 @@ export function CompanyForm() {
             <FormItem>
               <FormLabel>About</FormLabel>
               <FormControl>
-                <Textarea placeholder="Tell us about your company" {...field} />
+                <Textarea
+                  className="bg-secondary/30"
+                  placeholder="Tell us about your company"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -194,7 +210,7 @@ export function CompanyForm() {
                       onUploadError={() => {
                         console.log("Something went wrong");
                       }}
-                      className="ut-button:bg-primary ut-button:text-white ut-button:hover:ring-2 ut-button:hover:ring-offset-2 ut-button:hover:ring-primary ut-label:text-muted-foreground ut-allowed-content:text-muted-foreground border-primary/50 ut-button:duration-300"
+                      className="bg-secondary/30 ut-button:bg-primary ut-button:text-white ut-button:hover:ring-2 ut-button:hover:ring-offset-2 ut-button:hover:ring-primary ut-label:text-muted-foreground ut-allowed-content:text-muted-foreground border-primary/50 ut-button:duration-300"
                     />
                   )}
                 </div>
