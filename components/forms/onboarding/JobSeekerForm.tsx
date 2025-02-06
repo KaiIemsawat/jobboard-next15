@@ -17,6 +17,10 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { XIcon } from "lucide-react";
 import { UploadDropzone } from "@/components/general/UploadThingReexported";
+import { useState } from "react";
+import { createJobSeeker } from "@/app/actions";
+
+import PdfImage from "@/public/pdf.png";
 
 export function JobSeekerForm() {
   const form = useForm<z.infer<typeof jobSeekerSchema>>({
@@ -27,9 +31,25 @@ export function JobSeekerForm() {
       resume: "",
     },
   });
+
+  const [pending, setPending] = useState(false);
+
+  async function onSubmit(data: z.infer<typeof jobSeekerSchema>) {
+    try {
+      setPending(true);
+      await createJobSeeker(data);
+    } catch (error) {
+      if (error instanceof Error && error.message !== "NEXT_REDIRECT") {
+        console.log("Something went wrong");
+      }
+    } finally {
+      setPending(false);
+    }
+  }
+
   return (
     <Form {...form}>
-      <form className="space-y-6">
+      <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="name"
@@ -78,8 +98,8 @@ export function JobSeekerForm() {
                   {field.value ? (
                     <div className="relative w-fit">
                       <Image
-                        src={field.value}
-                        alt="Company Logo"
+                        src={PdfImage}
+                        alt="pdf Logo"
                         width={100}
                         height={100}
                         className="rounded-l"
@@ -111,6 +131,14 @@ export function JobSeekerForm() {
             </FormItem>
           )}
         />
+
+        <Button
+          type="submit"
+          className="w-full hover:ring-2 hover:ring-primary-foreground hover:ring-offset-2"
+          disabled={pending}
+        >
+          {pending ? "Submitting..." : "Continue"}
+        </Button>
       </form>
     </Form>
   );

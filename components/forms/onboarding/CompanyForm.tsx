@@ -222,7 +222,7 @@ export function CompanyForm() {
 
         <Button
           type="submit"
-          className={`w-full ${pending && "bg-primary/70"}`}
+          className="w-full hover:ring-2 hover:ring-primary-foreground hover:ring-offset-2"
           disabled={pending}
         >
           {pending ? "Submitting..." : "Continue"}
