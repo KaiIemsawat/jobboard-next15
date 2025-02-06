@@ -15,13 +15,20 @@ import {
   Select,
   SelectContent,
   SelectGroup,
+  SelectItem,
   SelectLabel,
   SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
-import { SelectItem, SelectValue } from "@radix-ui/react-select";
+
 import { countryList } from "@/app/utils/countriesList";
 import { Textarea } from "@/components/ui/textarea";
 import { UploadDropzone } from "@/components/general/UploadThingReexported";
+import { createCompany } from "@/app/actions";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import { XIcon } from "lucide-react";
 
 export function CompanyForm() {
   const form = useForm<z.infer<typeof companySchema>>({
@@ -35,9 +42,25 @@ export function CompanyForm() {
       xAccount: "",
     },
   });
+
+  const [pending, setPending] = useState(false);
+
+  async function onSubmit(data: z.infer<typeof companySchema>) {
+    try {
+      setPending(true);
+      await createCompany(data);
+    } catch (error) {
+      if (error instanceof Error && error.message !== "NEXT_REDIRECT") {
+        console.log("Something went wrong");
+      }
+    } finally {
+      setPending(false);
+    }
+  }
+
   return (
     <Form {...form}>
-      <form className="space-y-6">
+      <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
             control={form.control}
@@ -58,7 +81,7 @@ export function CompanyForm() {
             name="location"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Company Location</FormLabel>
+                <FormLabel>Location</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
@@ -143,21 +166,51 @@ export function CompanyForm() {
             <FormItem>
               <FormLabel>Company's Logo</FormLabel>
               <FormControl>
-                <UploadDropzone
-                  endpoint="imageUploader"
-                  onClientUploadComplete={(res) => {
-                    field.onChange(res[0].url);
-                  }}
-                  onUploadError={() => {
-                    console.log("Something went wrong");
-                  }}
-                  className="ut-button:bg-primary ut-button:text-white ut-button:hover:ring-2 ut-button:hover:ring-offset-2 ut-button:hover:ring-primary ut-label:text-muted-foreground ut-allowed-content:text-muted-foreground border-primary/50 ut-button:duration-300"
-                />
+                <div className="">
+                  {field.value ? (
+                    <div className="relative w-fit">
+                      <Image
+                        src={field.value}
+                        alt="Company Logo"
+                        width={100}
+                        height={100}
+                        className="rounded-l"
+                      />
+                      <Button
+                        className="absolute -top-1 -right-1 bg-transparent/60 rounded-full max-w-4 max-h-4 p-3 text-red-200 hover:text-white hover:bg-red-800 duration-300"
+                        type="button"
+                        size="icon"
+                        onClick={() => field.onChange("")}
+                      >
+                        <XIcon className="size-4" />
+                      </Button>
+                    </div>
+                  ) : (
+                    <UploadDropzone
+                      endpoint="imageUploader"
+                      onClientUploadComplete={(res) => {
+                        field.onChange(res[0].url);
+                      }}
+                      onUploadError={() => {
+                        console.log("Something went wrong");
+                      }}
+                      className="ut-button:bg-primary ut-button:text-white ut-button:hover:ring-2 ut-button:hover:ring-offset-2 ut-button:hover:ring-primary ut-label:text-muted-foreground ut-allowed-content:text-muted-foreground border-primary/50 ut-button:duration-300"
+                    />
+                  )}
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
+        <Button
+          type="submit"
+          className={`w-full ${pending && "bg-primary/70"}`}
+          disabled={pending}
+        >
+          {pending ? "Submitting..." : "Continue"}
+        </Button>
       </form>
     </Form>
   );

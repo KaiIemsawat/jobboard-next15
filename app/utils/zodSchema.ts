@@ -7,7 +7,7 @@ export const companySchema = z.object({
     .max(30, "Company name should not be longer than 30 characters"),
   location: z
     .string()
-    .min(3, "Location must not be less than 3 characters")
+    .min(2, "Location must not be less than 2 characters")
     .max(100, "Company namlocatione should not be longer than 100 characters"),
   about: z
     .string()
