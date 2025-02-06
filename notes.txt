@@ -13,3 +13,5 @@
 - OAtuth client ID
 - http://localhost:3000/api/auth/callback/google
 - create
+
+# uploadThing api keys...

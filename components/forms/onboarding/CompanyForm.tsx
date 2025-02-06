@@ -21,6 +21,7 @@ import {
 import { SelectItem, SelectValue } from "@radix-ui/react-select";
 import { countryList } from "@/app/utils/countriesList";
 import { Textarea } from "@/components/ui/textarea";
+import { UploadDropzone } from "@/components/general/UploadThingReexported";
 
 export function CompanyForm() {
   const form = useForm<z.infer<typeof companySchema>>({
@@ -129,6 +130,29 @@ export function CompanyForm() {
               <FormLabel>About</FormLabel>
               <FormControl>
                 <Textarea placeholder="Tell us about your company" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="logo"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Company's Logo</FormLabel>
+              <FormControl>
+                <UploadDropzone
+                  endpoint="imageUploader"
+                  onClientUploadComplete={(res) => {
+                    field.onChange(res[0].url);
+                  }}
+                  onUploadError={() => {
+                    console.log("Something went wrong");
+                  }}
+                  className="ut-button:bg-primary ut-button:text-white ut-button:hover:ring-2 ut-button:hover:ring-offset-2 ut-button:hover:ring-primary ut-label:text-muted-foreground ut-allowed-content:text-muted-foreground border-primary/50 ut-button:duration-300"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
