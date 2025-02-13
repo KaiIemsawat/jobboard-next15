@@ -20,7 +20,6 @@ interface iAppProps {
 }
 
 export function UserDropdown({ email, name, image }: iAppProps) {
-  console.log(image);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
