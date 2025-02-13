@@ -30,7 +30,7 @@ export function SalaryRangeSelector({
 
   const [range, setRange] = useState<[number, number]>([
     FormField.value || minSalary * 2.3,
-    toField.value || maxSalary / 1.53,
+    toField.value || maxSalary / 1.5,
   ]);
 
   function handleChangeRange(value: number[]) {
