@@ -1,3 +1,4 @@
+import { CreateJobForm } from "@/components/forms/CreateJobForm";
 import {
   Card,
   CardContent,
@@ -90,11 +91,7 @@ const stats = [
 export default function PostJobPage() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-5">
-      <Card className="col-span-1 lg:col-span-2">
-        <CardHeader>
-          <CardTitle className="text-xl">Card Form</CardTitle>
-        </CardHeader>
-      </Card>
+      <CreateJobForm />
       <div className="col-span-1">
         <Card>
           <CardHeader>
@@ -114,10 +111,12 @@ export default function PostJobPage() {
                     width={80}
                     height={80}
                     className="rounded-lg opacity-75 transition-opacity hover:opacity-100 duration-300"
-                  />
+                  />{" "}
                 </div>
               ))}
             </div>
+
+            {/* Testimonial */}
             <div
               className="space-y-4"
               // same as className="flex flex-col gap-4"
