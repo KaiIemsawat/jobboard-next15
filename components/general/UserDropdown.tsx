@@ -13,7 +13,14 @@ import {
 import Link from "next/link";
 import { signOut } from "@/app/utils/auth";
 
-export function UserDropdown() {
+interface iAppProps {
+  email: string;
+  name: string;
+  image: string;
+}
+
+export function UserDropdown({ email, name, image }: iAppProps) {
+  console.log(image);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -22,8 +29,8 @@ export function UserDropdown() {
           className="h-auto p-0 hover:bg-transparent text-primary font-bold tracking-wider"
         >
           <Avatar>
-            <AvatarImage src="" alt="Profile Image" />
-            <AvatarFallback>ZUK</AvatarFallback>
+            <AvatarImage src={image} alt="Profile Image" />
+            <AvatarFallback>{name.charAt(0).toUpperCase()}</AvatarFallback>
           </Avatar>
           <ChevronDown size={16} strokeWidth={2} className="ml-2 opacity-60" />
         </Button>
@@ -31,11 +38,9 @@ export function UserDropdown() {
       <DropdownMenuContent className="w-48" align="end">
         <DropdownMenuLabel className="flex flex-col">
           <span className="text-sm font-medium text-foreground tracking-wider">
-            Zukkii Iem
+            {name}
           </span>
-          <span className="text-xs text-muted-foreground">
-            testemail@email.com
-          </span>
+          <span className="text-xs text-muted-foreground">{email}</span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
@@ -44,7 +49,7 @@ export function UserDropdown() {
               <Heart
                 size={16}
                 strokeWidth={2}
-                className="opacity-50"
+                className="opacity-50 hover:opacity-100 text-primary"
                 // fill="#fff"
               />
               <span className="">Favorite Jobs</span>
@@ -55,7 +60,7 @@ export function UserDropdown() {
               <Layers2
                 size={16}
                 strokeWidth={2}
-                className="opacity-50"
+                className="opacity-50 hover:opacity-100 text-primary"
                 // fill="#fff"
               />
               <span className="">My Job Listing</span>
@@ -72,7 +77,11 @@ export function UserDropdown() {
             }}
           >
             <button className="flex w-full items-center gap-2">
-              <LogOut size={16} strokeWidth={2} className="opacity-50 " />
+              <LogOut
+                size={16}
+                strokeWidth={2}
+                className="opacity-50 hover:opacity-100 text-primary"
+              />
               <span className="">Logout</span>
             </button>
           </form>
