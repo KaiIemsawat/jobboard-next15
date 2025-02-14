@@ -124,7 +124,7 @@ export default function PostJobPage() {
               {testimonials.map((t, index) => (
                 <blockquote
                   key={index}
-                  className="border-l-2 border-primary pl-4"
+                  className="border-l-2 border-primary/80 pl-4"
                 >
                   <p className="text-sm text-muted-foreground italic">
                     "{t.qoute}"
@@ -140,7 +140,7 @@ export default function PostJobPage() {
             <div className="grid grid-cols-2 gap-4">
               {stats.map((s) => (
                 <div className="rounded-lg bg-muted p-2" key={s.id}>
-                  <h4 className="text-2xl font-bold text-primary/70">
+                  <h4 className="text-2xl font-bold text-primary/80">
                     {s.value}
                   </h4>
                   <p className="text-sm text-muted-foreground">{s.label}</p>
