@@ -44,6 +44,12 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.1.8
         version: 1.1.8(@types/react-dom@19.0.3(@types/react@19.0.8))(@types/react@19.0.8)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@tiptap/extension-text-align':
+        specifier: ^2.11.5
+        version: 2.11.5(@tiptap/core@2.11.5(@tiptap/pm@2.11.5))
+      '@tiptap/extension-typography':
+        specifier: ^2.11.5
+        version: 2.11.5(@tiptap/core@2.11.5(@tiptap/pm@2.11.5))
       '@tiptap/pm':
         specifier: ^2.11.5
         version: 2.11.5
@@ -1142,6 +1148,11 @@ packages:
     peerDependencies:
       '@tiptap/core': ^2.7.0
 
+  '@tiptap/extension-text-align@2.11.5':
+    resolution: {integrity: sha512-Ei0zDpH5N9EV59ogydK4HTKa4lCPicCsQllM5n/Nf2tUJPir3aiYxzJ73FzhComD4Hpo1ANYnmssBhy8QeoPZA==}
+    peerDependencies:
+      '@tiptap/core': ^2.7.0
+
   '@tiptap/extension-text-style@2.11.5':
     resolution: {integrity: sha512-YUmYl0gILSd/u/ZkOmNxjNXVw+mu8fpC2f8G4I4tLODm0zCx09j9DDEJXSrM5XX72nxJQqtSQsCpNKnL0hfeEQ==}
     peerDependencies:
@@ -1149,6 +1160,11 @@ packages:
 
   '@tiptap/extension-text@2.11.5':
     resolution: {integrity: sha512-Gq1WwyhFpCbEDrLPIHt5A8aLSlf8bfz4jm417c8F/JyU0J5dtYdmx0RAxjnLw1i7ZHE7LRyqqAoS0sl7JHDNSQ==}
+    peerDependencies:
+      '@tiptap/core': ^2.7.0
+
+  '@tiptap/extension-typography@2.11.5':
+    resolution: {integrity: sha512-K+mwkyyH3bhnw8f6dKt0AIIh7ipPPVTY5XiWxm1ZMnS6p7TkXeqSJRU6mT1a47YLX4IGBEMlTQdvDVvJ1hwTjA==}
     peerDependencies:
       '@tiptap/core': ^2.7.0
 
@@ -3761,11 +3777,19 @@ snapshots:
     dependencies:
       '@tiptap/core': 2.11.5(@tiptap/pm@2.11.5)
 
+  '@tiptap/extension-text-align@2.11.5(@tiptap/core@2.11.5(@tiptap/pm@2.11.5))':
+    dependencies:
+      '@tiptap/core': 2.11.5(@tiptap/pm@2.11.5)
+
   '@tiptap/extension-text-style@2.11.5(@tiptap/core@2.11.5(@tiptap/pm@2.11.5))':
     dependencies:
       '@tiptap/core': 2.11.5(@tiptap/pm@2.11.5)
 
   '@tiptap/extension-text@2.11.5(@tiptap/core@2.11.5(@tiptap/pm@2.11.5))':
+    dependencies:
+      '@tiptap/core': 2.11.5(@tiptap/pm@2.11.5)
+
+  '@tiptap/extension-typography@2.11.5(@tiptap/core@2.11.5(@tiptap/pm@2.11.5))':
     dependencies:
       '@tiptap/core': 2.11.5(@tiptap/pm@2.11.5)
 
