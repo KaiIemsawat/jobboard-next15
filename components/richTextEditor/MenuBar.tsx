@@ -33,6 +33,8 @@ export function MenuBar({ editor }: iAppProps) {
     return null;
   }
 
+  const textHover = "hover:text-primary";
+
   return (
     <div className="border rounded-t-lg p-2 bg-card flex flex-wrap gap-1 items-center">
       <TooltipProvider>
@@ -47,6 +49,7 @@ export function MenuBar({ editor }: iAppProps) {
                 }
                 className={cn(
                   editor.isActive("bold") && "bg-muted text-muted-foreground",
+                  textHover,
                 )}
               >
                 <Bold />
@@ -65,6 +68,7 @@ export function MenuBar({ editor }: iAppProps) {
                 }
                 className={cn(
                   editor.isActive("italic") && "bg-muted text-muted-foreground",
+                  textHover,
                 )}
               >
                 <Italic />
@@ -83,6 +87,7 @@ export function MenuBar({ editor }: iAppProps) {
                 }
                 className={cn(
                   editor.isActive("strike") && "bg-muted text-muted-foreground",
+                  textHover,
                 )}
               >
                 <Strikethrough />
@@ -102,6 +107,7 @@ export function MenuBar({ editor }: iAppProps) {
                 className={cn(
                   editor.isActive("heading", { level: 1 }) &&
                     "bg-muted text-muted-foreground",
+                  textHover,
                 )}
               >
                 <Heading1 />
@@ -121,6 +127,7 @@ export function MenuBar({ editor }: iAppProps) {
                 className={cn(
                   editor.isActive("heading", { level: 2 }) &&
                     "bg-muted text-muted-foreground",
+                  textHover,
                 )}
               >
                 <Heading2 />
@@ -140,6 +147,7 @@ export function MenuBar({ editor }: iAppProps) {
                 className={cn(
                   editor.isActive("heading", { level: 3 }) &&
                     "bg-muted text-muted-foreground",
+                  textHover,
                 )}
               >
                 <Heading3 />
@@ -159,6 +167,7 @@ export function MenuBar({ editor }: iAppProps) {
                 className={cn(
                   editor.isActive("bulletList") &&
                     "bg-muted text-muted-foreground",
+                  textHover,
                 )}
               >
                 <ListIcon />
@@ -178,6 +187,7 @@ export function MenuBar({ editor }: iAppProps) {
                 className={cn(
                   editor.isActive("orderedList") &&
                     "bg-muted text-muted-foreground",
+                  textHover,
                 )}
               >
                 <ListOrdered />
@@ -201,6 +211,7 @@ export function MenuBar({ editor }: iAppProps) {
                 className={cn(
                   editor.isActive({ textAlign: "left" }) &&
                     "bg-muted text-muted-foreground",
+                  textHover,
                 )}
               >
                 <AlignLeft />
@@ -220,6 +231,7 @@ export function MenuBar({ editor }: iAppProps) {
                 className={cn(
                   editor.isActive({ textAlign: "center" }) &&
                     "bg-muted text-muted-foreground",
+                  textHover,
                 )}
               >
                 <AlignCenter />
@@ -239,6 +251,7 @@ export function MenuBar({ editor }: iAppProps) {
                 className={cn(
                   editor.isActive({ textAlign: "right" }) &&
                     "bg-muted text-muted-foreground",
+                  textHover,
                 )}
               >
                 <AlignRight />
@@ -259,6 +272,7 @@ export function MenuBar({ editor }: iAppProps) {
                 type="button"
                 onClick={() => editor.chain().focus().undo().run()}
                 disabled={!editor.can().undo()}
+                className={textHover}
               >
                 <Undo />
               </Button>
@@ -273,7 +287,8 @@ export function MenuBar({ editor }: iAppProps) {
                 variant="ghost"
                 type="button"
                 onClick={() => editor.chain().focus().redo().run()}
-                disabled={!editor.can().undo()}
+                disabled={!editor.can().redo()}
+                className={textHover}
               >
                 <Redo />
               </Button>

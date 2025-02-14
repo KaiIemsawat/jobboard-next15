@@ -1,3 +1,4 @@
+import { ControllerRenderProps } from "react-hook-form";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TextAlign from "@tiptap/extension-text-align";
@@ -5,7 +6,11 @@ import Typography from "@tiptap/extension-typography";
 
 import { MenuBar } from "./MenuBar";
 
-export function JobDescriptionEditor() {
+interface iAppProps {
+  field: ControllerRenderProps;
+}
+
+export function JobDescriptionEditor({ field }: iAppProps) {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -15,6 +20,16 @@ export function JobDescriptionEditor() {
       Typography,
     ],
     immediatelyRender: false, // important for NextJs to set as 'false'
+    editorProps: {
+      attributes: {
+        class:
+          "min-h-[300px] p-4 max-w-none focus:outline-none prose prose-sm sm:prose lg:prose-lg xl:prose-xl dark:prose-invert",
+      },
+    },
+    onUpdate: ({ editor }) => {
+      field.onChange(JSON.stringify(editor.getJSON()));
+    },
+    content: field.value ? JSON.parse(field.value) : "",
   });
   return (
     <div className="w-full border rounded-lg overflow-hidden bg-card">
