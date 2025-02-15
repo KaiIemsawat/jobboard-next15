@@ -34,6 +34,7 @@ import { SalaryRangeSelector } from "../general/SalaryRangeSelector";
 import { JobDescriptionEditor } from "../richTextEditor/JobDescriptionEditor";
 import { BenefitsSelector } from "../general/BenefitsSelector";
 import { UploadDropzone } from "../general/UploadThingReexported";
+import { JobListingDuration } from "../general/JobListingDurationSelector";
 
 export function CreateJobForm() {
   const form = useForm<z.infer<typeof jobSchema>>({
@@ -370,6 +371,28 @@ export function CreateJobForm() {
               )}
             />
           </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-primary/70 text-xl md:text-2xl">
+              Job Listing Duration
+            </CardTitle>
+            <CardContent>
+              <FormField
+                control={form.control}
+                name="listingDuration"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <JobListingDuration field={field as any} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </CardContent>
+          </CardHeader>
         </Card>
       </form>
     </Form>
