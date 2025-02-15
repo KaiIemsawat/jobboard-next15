@@ -28,6 +28,7 @@ import { countryList } from "@/app/utils/countriesList";
 import { SalaryRangeSelector } from "../general/SalaryRangeSelector";
 import { JobDescriptionEditor } from "../richTextEditor/JobDescriptionEditor";
 import { BenefitsSelector } from "../general/BenefitsSelector";
+import { Textarea } from "../ui/textarea";
 
 export function CreateJobForm() {
   const form = useForm<z.infer<typeof jobSchema>>({
@@ -245,6 +246,51 @@ export function CreateJobForm() {
                 )}
               />
             </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <FormField
+                control={form.control}
+                name="companyWebsite"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Company Website</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Company Website..." {...field} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="companyXAccount"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Company X Account</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Company X Account" {...field} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <FormField
+              control={form.control}
+              name="companyAbout"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Company Description</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Tell us about your company"
+                      {...field}
+                      className="min-h-[126px]"
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
           </CardContent>
         </Card>
       </form>
