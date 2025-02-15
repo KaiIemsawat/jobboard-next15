@@ -174,11 +174,11 @@ export function CreateJobForm() {
             <FormField
               control={form.control}
               name="benefits"
-              render={(field) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>Benefits</FormLabel>
                   <FormControl>
-                    <BenefitsSelector />
+                    <BenefitsSelector field={field as any} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
