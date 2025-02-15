@@ -24,11 +24,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { Textarea } from "../ui/textarea";
+import { Button } from "../ui/button";
+import Image from "next/image";
+import { XIcon } from "lucide-react";
+
 import { countryList } from "@/app/utils/countriesList";
 import { SalaryRangeSelector } from "../general/SalaryRangeSelector";
 import { JobDescriptionEditor } from "../richTextEditor/JobDescriptionEditor";
 import { BenefitsSelector } from "../general/BenefitsSelector";
-import { Textarea } from "../ui/textarea";
+import { UploadDropzone } from "../general/UploadThingReexported";
 
 export function CreateJobForm() {
   const form = useForm<z.infer<typeof jobSchema>>({
@@ -55,9 +60,11 @@ export function CreateJobForm() {
       <form className="col-span-1 lg:col-span-2 flex flex-col gap-8">
         <Card>
           <CardHeader>
-            <CardTitle>Job Information</CardTitle>
+            <CardTitle className="text-primary/70 text-xl md:text-2xl">
+              Job Information
+            </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Title */}
               <FormField
@@ -65,7 +72,9 @@ export function CreateJobForm() {
                 name="jobTitle"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Job Title</FormLabel>
+                    <FormLabel className="text-primary/70 font-semibold">
+                      Job Title
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="Job Title" {...field} />
                     </FormControl>
@@ -79,7 +88,9 @@ export function CreateJobForm() {
                 name="employmentType"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Employment Type</FormLabel>
+                    <FormLabel className="text-primary/70 font-semibold">
+                      Employment Type
+                    </FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
@@ -111,7 +122,9 @@ export function CreateJobForm() {
                 name="location"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Job Location</FormLabel>
+                    <FormLabel className="text-primary/70 font-semibold">
+                      Job Location
+                    </FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
@@ -145,7 +158,9 @@ export function CreateJobForm() {
                 )}
               />
               <FormItem>
-                <FormLabel>Salary Length</FormLabel>
+                <FormLabel className="text-primary/70 font-semibold">
+                  Salary Length
+                </FormLabel>
                 <FormControl>
                   <SalaryRangeSelector
                     control={form.control}
@@ -163,7 +178,9 @@ export function CreateJobForm() {
               name="jobDescription"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Job Description</FormLabel>
+                  <FormLabel className="text-primary/70 font-semibold">
+                    Job Description
+                  </FormLabel>
                   <FormControl>
                     <JobDescriptionEditor field={field as any} />
                   </FormControl>
@@ -177,7 +194,9 @@ export function CreateJobForm() {
               name="benefits"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Benefits</FormLabel>
+                  <FormLabel className="text-primary/70 font-semibold">
+                    Benefits
+                  </FormLabel>
                   <FormControl>
                     <BenefitsSelector field={field as any} />
                   </FormControl>
@@ -190,16 +209,20 @@ export function CreateJobForm() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Company Information</CardTitle>
+            <CardTitle className="text-primary/70 text-xl md:text-2xl">
+              Company Information
+            </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FormField
                 control={form.control}
                 name="companyName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Company Name</FormLabel>
+                    <FormLabel className="text-primary/70 font-semibold">
+                      Company Name
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="Company Name..." {...field} />
                     </FormControl>
@@ -212,7 +235,9 @@ export function CreateJobForm() {
                 name="companyLocation"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Company Location</FormLabel>
+                    <FormLabel className="text-primary/70 font-semibold">
+                      Company Location
+                    </FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
@@ -253,7 +278,9 @@ export function CreateJobForm() {
                 name="companyWebsite"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Company Website</FormLabel>
+                    <FormLabel className="text-primary/70 font-semibold">
+                      Company Website
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="Company Website..." {...field} />
                     </FormControl>
@@ -266,7 +293,9 @@ export function CreateJobForm() {
                 name="companyXAccount"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Company X Account</FormLabel>
+                    <FormLabel className="text-primary/70 font-semibold">
+                      Company X Account
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="Company X Account" {...field} />
                     </FormControl>
@@ -280,7 +309,9 @@ export function CreateJobForm() {
               name="companyAbout"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Company Description</FormLabel>
+                  <FormLabel className="text-primary/70 font-semibold">
+                    Company Description
+                  </FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder="Tell us about your company"
@@ -288,6 +319,53 @@ export function CreateJobForm() {
                       className="min-h-[126px]"
                     />
                   </FormControl>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="companyLogo"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-primary/70 font-semibold">
+                    Company's Logo
+                  </FormLabel>
+                  <FormControl>
+                    <div className="">
+                      {field.value ? (
+                        <div className="relative w-fit">
+                          <Image
+                            src={field.value}
+                            alt="Company Logo"
+                            width={100}
+                            height={100}
+                            className="rounded-l"
+                          />
+                          <Button
+                            className="absolute -top-1 -right-1 bg-transparent/60 rounded-full max-w-4 max-h-4 p-3 text-red-200 hover:text-white hover:bg-red-800 duration-300"
+                            type="button"
+                            size="icon"
+                            onClick={() => field.onChange("")}
+                          >
+                            <XIcon className="size-4" />
+                          </Button>
+                        </div>
+                      ) : (
+                        <UploadDropzone
+                          endpoint="imageUploader"
+                          onClientUploadComplete={(res) => {
+                            field.onChange(res[0].url);
+                          }}
+                          onUploadError={() => {
+                            console.log("Something went wrong");
+                          }}
+                          className="bg-secondary/30 ut-button:bg-primary ut-button:text-white ut-button:hover:ring-2 ut-button:hover:ring-offset-2 ut-button:hover:ring-primary ut-label:text-muted-foreground ut-allowed-content:text-muted-foreground border-primary/50 ut-button:duration-300"
+                        />
+                      )}
+                    </div>
+                  </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
