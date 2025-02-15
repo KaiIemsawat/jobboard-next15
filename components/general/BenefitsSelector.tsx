@@ -41,7 +41,7 @@ export function BenefitsSelector({ field }: BenefitsSelectorProps) {
 
       <div className="mt-4 text-sm text-muted-foreground">
         Selected Benefit(s) :{" "}
-        <span className="text-primary font-semibold">
+        <span className={`${field.value.length > 0 && `text-primary`}`}>
           {(field.value || []).length}
         </span>
       </div>
