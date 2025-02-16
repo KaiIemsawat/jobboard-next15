@@ -122,10 +122,11 @@ model JobPost {
 
   status JobPostStatus @default(DRAFT)
 
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId String
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Company   Company  @relation(fields: [companyId], references: [id])
-  companyId String
 }
 
 enum JobPostStatus {
