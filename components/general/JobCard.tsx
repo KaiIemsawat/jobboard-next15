@@ -26,7 +26,7 @@ interface iAppProps {
 
 export function JobCard({ job }: iAppProps) {
   return (
-    <Link href={`/job`} className="">
+    <Link href={`/job/${job.id}`} className="">
       <Card className="hover:shadow-lg transition-all duration-300 hover:border-primary">
         <CardHeader>
           <div className="flex flex-col md:flex-row gap-4">
@@ -49,7 +49,7 @@ export function JobCard({ job }: iAppProps) {
                   {job.employmentType}
                 </Badge>
                 <div className="h-4 border-secondary border-l-2" />
-                <Badge className="rounded-full bg-secondary text-primary/40">
+                <Badge className="rounded-full bg-secondary text-primary/80 hover:bg-secondary">
                   {job.location}
                 </Badge>
                 <div className="h-4 border-secondary border-l-2" />
