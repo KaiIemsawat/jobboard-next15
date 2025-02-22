@@ -21,7 +21,7 @@ const jobTypes = ["full-time", "part-time", "contract", "internship"];
 export function JobFilters() {
   return (
     <Card className="col-span-1">
-      <CardHeader className="flex justify-between items-center flex-row">
+      <CardHeader className="flex justify-between items-center md:flex-row">
         <CardTitle className="text-2xl font-semibold">Filters</CardTitle>
         <Button
           size="sm"
@@ -35,7 +35,7 @@ export function JobFilters() {
       <CardContent className="space-y-6">
         <div className="space-y-4">
           <Label className="text-lg font-semibold">Job Type</Label>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid md:grid-cols-2 gap-4">
             {jobTypes.map((job, index) => (
               <div className="flex items-center space-x-2" key={index}>
                 <Checkbox id={job} />

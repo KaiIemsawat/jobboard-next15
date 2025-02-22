@@ -1,9 +1,10 @@
-import Link from "next/link";
-import { Card, CardHeader } from "../ui/card";
-import { User2 } from "lucide-react";
-import Image from "next/image";
-import { Badge } from "../ui/badge";
 import { formatCurrency } from "@/app/utils/formatCurrency";
+import { MapPin } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { Badge } from "../ui/badge";
+import { Card, CardHeader } from "../ui/card";
+import { formatRelativeTime } from "@/app/utils/formatRelativeTime";
 
 interface iAppProps {
   job: {
@@ -57,6 +58,15 @@ export function JobCard({ job }: iAppProps) {
                   {formatCurrency(job.salaryTo)}
                 </p>
               </div>
+            </div>
+            <div className="md:ml-auto">
+              <div className="flex items-center gap-2">
+                <MapPin className="size-4" />
+                <h2>{job.location}</h2>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                {formatRelativeTime(job.createdAt)}
+              </p>
             </div>
           </div>
         </CardHeader>
