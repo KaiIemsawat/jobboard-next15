@@ -1,6 +1,5 @@
 import { JobFilters } from "@/components/general/JobFilters";
 import { JobListings } from "@/components/general/JobListings";
-import { Card } from "@/components/ui/card";
 
 export default function Home() {
   return (
