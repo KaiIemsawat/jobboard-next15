@@ -10,7 +10,7 @@
 
 export function getFlagEmoji(location: string) {
   const cleanLocation = location.trim().toLowerCase();
-  console.log(cleanLocation);
+  // console.log(cleanLocation);
 
   const country = countryList.find((country) =>
     cleanLocation.includes(country.name.toLowerCase()),

@@ -4,8 +4,10 @@ import { benefits } from "@/app/utils/listOfBenefit";
 import { JsonToHtml } from "@/components/general/JsonToHtml";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { Bookmark } from "lucide-react";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 
 async function getJob(jobId: string) {
@@ -21,6 +23,7 @@ async function getJob(jobId: string) {
       employmentType: true,
       benefits: true,
       createdAt: true,
+      listingDuration: true,
       company: {
         select: {
           name: true,
@@ -45,13 +48,13 @@ export default async function JobIdPage({ params }: { params: Params }) {
   const { jobId } = await params;
 
   const data = await getJob(jobId);
-  console.log(data);
+  // console.log(data);
 
   const locationFlag = getFlagEmoji(data.location);
 
   return (
-    <div className="grid lg:grid-cols-[1fr, 400px] gap-8">
-      <div className="space-y-8">
+    <div className="grid lg:grid-cols-3 gap-8">
+      <div className="space-y-8 col-span-2">
         {/* HEADER */}
         <div className="flex items-center justify-between">
           <div className="">
@@ -109,6 +112,87 @@ export default async function JobIdPage({ params }: { params: Params }) {
             })}
           </div>
         </section>
+      </div>
+
+      <div className="space-y-6">
+        <Card className="p-6">
+          <div className="space-y-4">
+            <div className="">
+              <h3 className="font-semibold">Apply Now</h3>
+              <p className="text-sm text-muted-foreground mt-1">
+                Please let {data.company.name} know you found this job on
+                JobZukkii. This will help us grow
+              </p>
+            </div>
+            <Button className="w-full">Apply Now</Button>
+          </div>
+        </Card>
+
+        {/* JOB DETAILS */}
+        <Card className="p-6">
+          <h3 className="font-semibold mb-2">About the job</h3>
+          <div className="space-y-2">
+            <div className="flex justify-between">
+              <span className="text-sm text-primary/75">Apply before</span>
+              <span className="text-sm">
+                {new Date(
+                  data.createdAt.getTime() +
+                    data.listingDuration * 24 * 60 * 60 * 1000,
+                ).toLocaleDateString("en-US", {
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
+                })}
+              </span>
+            </div>
+
+            <div className="flex justify-between">
+              <span className="text-sm text-primary/75">Posted on</span>
+              <span className="text-sm">
+                {data.createdAt.toLocaleDateString("en-US", {
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
+                })}
+              </span>
+            </div>
+
+            <div className="flex justify-between">
+              <span className="text-sm text-primary/75">Employment Type</span>
+              <span className="text-sm">{data.employmentType}</span>
+            </div>
+
+            <div className="flex justify-between">
+              <span className="text-sm text-primary/75">Location</span>
+              <span className="text-sm">
+                <span className="me-1">
+                  {locationFlag && <span className="mr-1">{locationFlag}</span>}
+                </span>
+                {data.location}
+              </span>
+            </div>
+          </div>
+        </Card>
+        {/* COMPANY CARD */}
+        <Card className="p-6">
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <Image
+                src={data.company.logo}
+                alt={"Company Logo"}
+                width={48}
+                height={48}
+                className="rounded-full size-12"
+              />
+              <div className="flex flex-col">
+                <h3 className="font-semibold">{data.company.name}</h3>
+                <p className="text-sm text-muted-foreground line-clamp-3">
+                  {data.company.about}
+                </p>
+              </div>
+            </div>
+          </div>
+        </Card>
       </div>
     </div>
   );
