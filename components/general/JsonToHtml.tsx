@@ -26,5 +26,5 @@ export function JsonToHtml({ json }: { json: JSONContent }) {
     content: json,
   });
 
-  return <EditorContent editor={editor}>JsonToHtml</EditorContent>;
+  return <EditorContent editor={editor} />;
 }
