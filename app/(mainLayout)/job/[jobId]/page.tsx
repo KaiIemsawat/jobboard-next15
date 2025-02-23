@@ -1,5 +1,6 @@
 import { getFlagEmoji } from "@/app/utils/countriesList";
 import { prisma } from "@/app/utils/db";
+import { JsonToHtml } from "@/components/general/JsonToHtml";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Bookmark } from "lucide-react";
@@ -74,11 +75,7 @@ export default async function JobIdPage({ params }: { params: Params }) {
         </div>
 
         <section>
-          <p className="">
-            description placeholder description placeholderdescription
-            placeholder description placeholderdescription placeholder
-            description placeholder..
-          </p>
+          <JsonToHtml json={JSON.parse(data.jobDescription)} />
         </section>
       </div>
     </div>
