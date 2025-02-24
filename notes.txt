@@ -15,3 +15,6 @@
 - create
 
 # uploadThing api keys...
+
+
+# Resend Api at 'https://resend.com/onboarding'

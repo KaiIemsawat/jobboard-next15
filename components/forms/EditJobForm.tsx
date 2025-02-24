@@ -1,10 +1,20 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import Image from "next/image";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 
+import { editJobPost } from "@/app/actions";
+import { countryList } from "@/app/utils/countriesList";
 import { jobSchema } from "@/app/utils/zodSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { XIcon } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { BenefitsSelector } from "../general/BenefitsSelector";
+import { SalaryRangeSelector } from "../general/SalaryRangeSelector";
+import { UploadDropzone } from "../general/UploadThingReexported";
+import { JobDescriptionEditor } from "../richTextEditor/JobDescriptionEditor";
+import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import {
   Form,
@@ -25,54 +35,47 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
-import { Button } from "../ui/button";
-import Image from "next/image";
-import { XIcon } from "lucide-react";
-
-import { countryList } from "@/app/utils/countriesList";
-import { SalaryRangeSelector } from "../general/SalaryRangeSelector";
-import { JobDescriptionEditor } from "../richTextEditor/JobDescriptionEditor";
-import { BenefitsSelector } from "../general/BenefitsSelector";
-import { UploadDropzone } from "../general/UploadThingReexported";
-import { JobListingDuration } from "../general/JobListingDurationSelector";
-import { cp } from "fs";
-import { createJob } from "@/app/actions";
-import { useState } from "react";
 
 interface iAppProps {
-  companyLocation: string;
-  companyName: string;
-  companyAbout: string;
-  companyLogo: string;
-  companyWebsite: string;
-  companyXAccount: string | null;
+  jobPost: {
+    jobTitle: string;
+    id: string;
+    employmentType: string;
+    location: string;
+    salaryFrom: number;
+    salaryTo: number;
+    jobDescription: string;
+    benefits: string[];
+    listingDuration: number;
+    company: {
+      location: string;
+      name: string;
+      logo: string;
+      website: string;
+      xAccount: string | null;
+      about: string;
+    };
+  };
 }
 
-export function CreateJobForm({
-  companyAbout,
-  companyLocation,
-  companyLogo,
-  companyName,
-  companyWebsite,
-  companyXAccount,
-}: iAppProps) {
+export function EditJobForm({ jobPost }: iAppProps) {
   const form = useForm<z.infer<typeof jobSchema>>({
     resolver: zodResolver(jobSchema),
     defaultValues: {
-      benefits: [],
-      companyAbout: companyAbout,
-      companyLocation: companyLocation,
-      companyName: companyName,
-      companyLogo: companyLogo,
-      companyWebsite: companyWebsite,
-      companyXAccount: companyXAccount || "",
-      employmentType: "",
-      jobDescription: "",
-      jobTitle: "",
-      listingDuration: 30,
-      location: "",
-      salaryFrom: 0,
-      salaryTo: 0,
+      benefits: jobPost.benefits,
+      companyAbout: jobPost.company.about,
+      companyLocation: jobPost.company.location,
+      companyName: jobPost.company.name,
+      companyLogo: jobPost.company.logo,
+      companyWebsite: jobPost.company.website,
+      companyXAccount: jobPost.company.xAccount || "",
+      employmentType: jobPost.employmentType,
+      jobDescription: jobPost.jobDescription,
+      jobTitle: jobPost.jobTitle,
+      listingDuration: jobPost.listingDuration,
+      location: jobPost.location,
+      salaryFrom: jobPost.salaryFrom,
+      salaryTo: jobPost.salaryTo,
     },
   });
 
@@ -82,7 +85,7 @@ export function CreateJobForm({
     try {
       setPending(true);
 
-      await createJob(values);
+      await editJobPost(values, jobPost.id);
     } catch (error) {
       if (error instanceof Error && error.message !== "NEXT_REDIRECT") {
         console.log("Something went wrong");
@@ -415,34 +418,12 @@ export function CreateJobForm({
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-primary/70 text-xl md:text-2xl">
-              Job Listing Duration
-            </CardTitle>
-            <CardContent>
-              <FormField
-                control={form.control}
-                name="listingDuration"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <JobListingDuration field={field as any} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </CardContent>
-          </CardHeader>
-        </Card>
-
         <Button
           type="submit"
           className="w-full text-white font-bold uppercase tracking-wider"
           disabled={pending}
         >
-          {pending ? "Submitting..." : "Create Job Post"}
+          {pending ? "Submitting..." : "Submit Editing"}
         </Button>
       </form>
     </Form>

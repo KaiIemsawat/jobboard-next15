@@ -86,12 +86,24 @@ export default async function MyJobspage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Logo</TableHead>
-                  <TableHead>Company</TableHead>
-                  <TableHead>Job Title</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Created At</TableHead>
-                  <TableHead>Actions</TableHead>
+                  <TableHead className="text-primary/75 font-semibold">
+                    Logo
+                  </TableHead>
+                  <TableHead className="text-primary/75 font-semibold">
+                    Company
+                  </TableHead>
+                  <TableHead className="text-primary/75 font-semibold">
+                    Job Title
+                  </TableHead>
+                  <TableHead className="text-primary/75 font-semibold">
+                    Status
+                  </TableHead>
+                  <TableHead className="text-primary/75 font-semibold">
+                    Created At
+                  </TableHead>
+                  <TableHead className="text-right text-primary/75 font-semibold">
+                    Actions
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -119,7 +131,7 @@ export default async function MyJobspage() {
                         year: "numeric",
                       })}
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="text-right">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button variant="ghost" size="icon">
