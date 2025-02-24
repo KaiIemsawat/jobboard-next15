@@ -1,45 +1,98 @@
+import { notFound } from "next/navigation";
+import Image from "next/image";
+import { Bookmark } from "lucide-react";
+
+import arcjet, { detectBot, tokenBucket } from "@/app/utils/arcjet";
 import { getFlagEmoji } from "@/app/utils/countriesList";
 import { prisma } from "@/app/utils/db";
 import { benefits } from "@/app/utils/listOfBenefit";
 import { JsonToHtml } from "@/components/general/JsonToHtml";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { Bookmark } from "lucide-react";
-import Image from "next/image";
-import { notFound } from "next/navigation";
+import { request } from "@arcjet/next";
+import { auth } from "@/app/utils/auth";
+import Link from "next/link";
+import { SaveJobButton } from "@/components/general/SubmitButtons";
+import { saveJobPost, unSaveJobPost } from "@/app/actions";
 
-async function getJob(jobId: string) {
-  const jobData = await prisma.jobPost.findUnique({
-    where: {
-      status: "ACTIVE",
-      id: jobId,
-    },
-    select: {
-      jobTitle: true,
-      jobDescription: true,
-      location: true,
-      employmentType: true,
-      benefits: true,
-      createdAt: true,
-      listingDuration: true,
-      company: {
-        select: {
-          name: true,
-          logo: true,
-          location: true,
-          about: true,
+const aj = arcjet.withRule(
+  detectBot({
+    mode: "LIVE",
+    allow: ["CATEGORY:SEARCH_ENGINE", "CATEGORY:PREVIEW"],
+  }),
+);
+
+function getClient(session: boolean) {
+  if (session) {
+    return aj.withRule(
+      tokenBucket({
+        mode: "LIVE",
+        capacity: 100,
+        interval: 60,
+        refillRate: 30,
+      }),
+    );
+  } else {
+    return aj.withRule(
+      tokenBucket({
+        mode: "LIVE",
+        capacity: 100,
+        interval: 60,
+        refillRate: 10,
+      }),
+    );
+  }
+}
+
+async function getJob(jobId: string, userId?: string) {
+  const [jobData, savedJob] = await Promise.all([
+    await prisma.jobPost.findUnique({
+      where: {
+        status: "ACTIVE",
+        id: jobId,
+      },
+      select: {
+        jobTitle: true,
+        jobDescription: true,
+        location: true,
+        employmentType: true,
+        benefits: true,
+        createdAt: true,
+        listingDuration: true,
+        company: {
+          select: {
+            name: true,
+            logo: true,
+            location: true,
+            about: true,
+          },
         },
       },
-    },
-  });
+    }),
 
-  if (!jobData) {
-    return notFound();
-  }
+    userId
+      ? prisma.savedJobPost.findUnique({
+          where: {
+            userId_jobPostId: {
+              userId: userId,
+              jobPostId: jobId,
+            },
+          },
+          select: {
+            id: true,
+          },
+        })
+      : null,
+  ]);
 
-  return jobData;
+  if (!jobData) return notFound();
+
+  return {
+    jobData,
+    savedJob,
+  };
 }
 
 type Params = Promise<{ jobId: string }>; // 'jobId' needs to be matched with folder name
@@ -47,13 +100,21 @@ type Params = Promise<{ jobId: string }>; // 'jobId' needs to be matched with fo
 export default async function JobIdPage({ params }: { params: Params }) {
   const { jobId } = await params;
 
-  const data = await getJob(jobId);
-  // console.log(data);
+  const session = await auth();
+
+  const req = await request();
+  const decision = await getClient(!!session).protect(req, { requested: 10 });
+
+  if (decision.isDenied()) {
+    throw new Error("forbidden");
+  }
+
+  const { jobData: data, savedJob } = await getJob(jobId, session?.user?.id);
 
   const locationFlag = getFlagEmoji(data.location);
 
   return (
-    <div className="grid lg:grid-cols-3 gap-8">
+    <div className="grid lg:grid-cols-3 gap-8 mb-8">
       <div className="space-y-8 col-span-2">
         {/* HEADER */}
         <div className="flex items-center justify-between">
@@ -73,10 +134,26 @@ export default async function JobIdPage({ params }: { params: Params }) {
             </div>
           </div>
 
-          <Button variant="outline">
-            <Bookmark className="size-4" />
-            Save Job
-          </Button>
+          {/*  */}
+          {session?.user ? (
+            <form
+              action={
+                savedJob
+                  ? unSaveJobPost.bind(null, savedJob.id)
+                  : saveJobPost.bind(null, jobId)
+              }
+            >
+              <SaveJobButton savedJob={!!savedJob} />
+            </form>
+          ) : (
+            <Link
+              href="/login"
+              className={buttonVariants({ variant: "outline" })}
+            >
+              <Bookmark className="size-4" />
+              Save Job
+            </Link>
+          )}
         </div>
 
         <section>
@@ -173,6 +250,7 @@ export default async function JobIdPage({ params }: { params: Params }) {
             </div>
           </div>
         </Card>
+
         {/* COMPANY CARD */}
         <Card className="p-6">
           <div className="space-y-4">
