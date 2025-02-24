@@ -1,5 +1,6 @@
 import { prisma } from "@/app/utils/db";
 import { requireUser } from "@/app/utils/requireUser";
+import { CopyLinkMenuItem } from "@/components/general/CopyLink";
 import { EmptyState } from "@/components/general/EmptyState";
 import { Button } from "@/components/ui/button";
 import {
@@ -143,24 +144,19 @@ export default async function MyJobspage() {
                           <DropdownMenuItem asChild>
                             <Link
                               href={`/my-jobs/${listing.id}/edit`}
-                              className="text-muted-foreground hover:text-white text-xs"
+                              className="text-muted-foreground hover:text-white text-xs cursor-pointer"
                             >
                               <PenBoxIcon /> Edit Job
                             </Link>
                           </DropdownMenuItem>
-                          <DropdownMenuItem asChild>
-                            <Link
-                              href={`/my-jobs/${listing.id}/edit`}
-                              className="text-muted-foreground hover:text-white text-xs"
-                            >
-                              <CopyCheckIcon /> Copy Job URL
-                            </Link>
-                          </DropdownMenuItem>
+                          <CopyLinkMenuItem
+                            jobUrl={`${process.env.NEXT_PUBLIC_URL}/job/${listing.id}`}
+                          />
                           <DropdownMenuSeparator />
                           <DropdownMenuItem asChild>
                             <Link
                               href={`/my-jobs/${listing.id}/delete`}
-                              className="text-muted-foreground hover:text-white text-xs"
+                              className="text-muted-foreground hover:text-white text-xs cursor-pointer"
                             >
                               <XCircle /> Delete Job
                             </Link>
