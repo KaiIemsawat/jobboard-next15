@@ -86,7 +86,7 @@ export default async function MyJobspage() {
           <CardContent>
             <Table>
               <TableHeader>
-                <TableRow>
+                <TableRow className="bg-secondary/20">
                   <TableHead className="text-primary/75 font-semibold">
                     Logo
                   </TableHead>
