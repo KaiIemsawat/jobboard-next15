@@ -29,8 +29,8 @@ export function MainPagination({ currentPage, totalPages }: iAppProps) {
     router.push(`?${params.toString()}`);
   }
 
-  function generatePaginationItems() {
-    const items = [];
+  function generatePaginationItems(): (number | null)[] {
+    const items: (number | null)[] = [];
     if (totalPages <= 5) {
       for (let i = 1; i <= totalPages; i++) {
         items.push(i);
