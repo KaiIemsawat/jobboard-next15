@@ -160,7 +160,7 @@ export default async function PostJobPage() {
                   className="border-l-2 border-primary/80 pl-4"
                 >
                   <p className="text-sm text-muted-foreground italic">
-                    "{t.qoute}"
+                    &qout;{t.qoute}&qout;
                   </p>
                   <footer className="mt-2 text-sm font-medium">
                     - {t.author}, {t.company}

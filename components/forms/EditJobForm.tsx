@@ -209,7 +209,6 @@ export function EditJobForm({ jobPost }: iAppProps) {
                     control={form.control}
                     minSalary={30000}
                     maxSalary={900000}
-                    currency="USD"
                     step={2000}
                   />
                 </FormControl>
@@ -225,7 +224,12 @@ export function EditJobForm({ jobPost }: iAppProps) {
                     Job Description
                   </FormLabel>
                   <FormControl>
-                    <JobDescriptionEditor field={field as any} />
+                    <JobDescriptionEditor
+                      field={
+                        /* eslint-disable  @typescript-eslint/no-explicit-any */
+                        field as any
+                      }
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -375,7 +379,7 @@ export function EditJobForm({ jobPost }: iAppProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-primary/70 font-semibold">
-                    Company's Logo
+                    Company&apos;s Logo
                   </FormLabel>
                   <FormControl>
                     <div className="">

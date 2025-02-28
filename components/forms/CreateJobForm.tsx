@@ -1,10 +1,13 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 import { jobSchema } from "@/app/utils/zodSchema";
+import { XIcon } from "lucide-react";
+import Image from "next/image";
+import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import {
   Form,
@@ -25,19 +28,15 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
-import { Button } from "../ui/button";
-import Image from "next/image";
-import { XIcon } from "lucide-react";
 
-import { countryList } from "@/app/utils/countriesList";
-import { SalaryRangeSelector } from "../general/SalaryRangeSelector";
-import { JobDescriptionEditor } from "../richTextEditor/JobDescriptionEditor";
-import { BenefitsSelector } from "../general/BenefitsSelector";
-import { UploadDropzone } from "../general/UploadThingReexported";
-import { JobListingDuration } from "../general/JobListingDurationSelector";
-import { cp } from "fs";
 import { createJob } from "@/app/actions";
+import { countryList } from "@/app/utils/countriesList";
 import { useState } from "react";
+import { BenefitsSelector } from "../general/BenefitsSelector";
+import { JobListingDuration } from "../general/JobListingDurationSelector";
+import { SalaryRangeSelector } from "../general/SalaryRangeSelector";
+import { UploadDropzone } from "../general/UploadThingReexported";
+import { JobDescriptionEditor } from "../richTextEditor/JobDescriptionEditor";
 
 interface iAppProps {
   companyLocation: string;
@@ -206,7 +205,6 @@ export function CreateJobForm({
                     control={form.control}
                     minSalary={30000}
                     maxSalary={900000}
-                    currency="USD"
                     step={2000}
                   />
                 </FormControl>
@@ -222,7 +220,12 @@ export function CreateJobForm({
                     Job Description
                   </FormLabel>
                   <FormControl>
-                    <JobDescriptionEditor field={field as any} />
+                    <JobDescriptionEditor
+                      field={
+                        /* eslint-disable  @typescript-eslint/no-explicit-any */
+                        field as any
+                      }
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -372,7 +375,7 @@ export function CreateJobForm({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-primary/70 font-semibold">
-                    Company's Logo
+                    Company&apos;s Logo
                   </FormLabel>
                   <FormControl>
                     <div className="">

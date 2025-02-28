@@ -4,16 +4,16 @@ import { useState } from "react";
 import { formatCurrency } from "@/app/utils/formatCurrency";
 
 interface iAppProps {
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   control: Control<any>;
   minSalary: number;
   maxSalary: number;
   step: number;
-  currency: string;
+  // currency: string;
 }
 
 export function SalaryRangeSelector({
   control,
-  currency,
   maxSalary,
   minSalary,
   step,

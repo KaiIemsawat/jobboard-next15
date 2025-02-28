@@ -180,7 +180,7 @@ export function CompanyForm() {
           name="logo"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Company's Logo</FormLabel>
+              <FormLabel>Company&apos;s Logo</FormLabel>
               <FormControl>
                 <div className="">
                   {field.value ? (
