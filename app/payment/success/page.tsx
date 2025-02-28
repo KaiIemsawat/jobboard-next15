@@ -3,8 +3,11 @@ import Link from "next/link";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { requireUser } from "@/app/utils/requireUser";
 
-export default function PaymentSuccess() {
+export default async function PaymentSuccess() {
+  await requireUser();
+
   return (
     <div className="w-full min-h-screen flex flex-1 justify-center items-center">
       <Card className="w-[350px]">
