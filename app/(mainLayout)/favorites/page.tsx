@@ -3,7 +3,25 @@ import { requireUser } from "@/app/utils/requireUser";
 import { EmptyState } from "@/components/general/EmptyState";
 import { JobCard } from "@/components/general/JobCard";
 
-async function getFavorites(userId: string) {
+type FavoriteJob = {
+  JobPost: {
+    id: string;
+    jobTitle: string;
+    salaryFrom: number;
+    salaryTo: number;
+    location: string;
+    employmentType: string;
+    createdAt: Date;
+    company: {
+      name: string;
+      logo: string;
+      location: string;
+      about: string;
+    };
+  };
+};
+
+async function getFavorites(userId: string): Promise<FavoriteJob[]> {
   const data = await prisma.savedJobPost.findMany({
     where: {
       userId: userId,
@@ -51,8 +69,8 @@ export default async function FavoritePage() {
   }
   return (
     <div className="grid grid-cols-1 mt-5 gap-4">
-      {data.map((favorite) => (
-        <JobCard key={favorite.JobPost.id} job={favorite.JobPost} />
+      {data.map((favorite: FavoriteJob) => (
+        <JobCard key={favorite.JobPost?.id} job={favorite.JobPost} />
       ))}
     </div>
   );
